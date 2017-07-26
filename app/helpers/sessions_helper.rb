@@ -15,10 +15,17 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  #Descobrir se um usuário está logado e redirecionar caso não esteja
+  def logged_user
+    respond_to do |format|
+      format.html { redirect_to root_url, alert: 'Por favor faça login.' }
+    end if !logged_in?
+  end
+
   #Encerra a sessão do usuário
   def log_out
     session.delete(:user_id)
     @current_user = nil
   end
-  
+
 end

@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       redirect_to user
     else
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: 'Something went wrong!' }
+        format.html { redirect_to request.referrer, alert: 'Something went wrong!' }
       end
     end
   end

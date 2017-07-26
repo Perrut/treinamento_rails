@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726165525) do
+ActiveRecord::Schema.define(version: 20170726213315) do
 
   create_table "posts", force: :cascade do |t|
     t.text "content"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170726165525) do
     t.datetime "updated_at", null: false
     t.text "address"
     t.string "password_digest"
+    t.boolean "admin", default: false
   end
 
 end
