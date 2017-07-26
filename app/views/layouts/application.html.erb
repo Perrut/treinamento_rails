@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ToyApp</title>
+    <title><%= yield(:title) %>Blógui</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,6 +9,9 @@
   </head>
 
   <body>
+    <% if logged_in? %>
+      <h2 id="notice">Você está logado! <%= link_to "(Log out)", logout_path, method: :delete %></h2>
+    <% end %>
     <%= yield %>
   </body>
 </html>

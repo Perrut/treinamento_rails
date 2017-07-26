@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  #Login
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+
   #Post
   resources :posts
 
@@ -13,5 +18,5 @@ Rails.application.routes.draw do
   delete 'users/:id', to: 'users#destroy'
 
   #Root
-  root 'posts#index'
+  root 'sessions#new'
 end
