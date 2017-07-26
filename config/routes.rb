@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  #Post
+  resources :posts
+
   #User
   get '/users', to: 'users#index'
   post '/users', to: 'users#create'
@@ -7,8 +10,8 @@ Rails.application.routes.draw do
   get '/users/:id/edit', to: 'users#edit', as: :edit_user
   get '/users/:id', to: 'users#show', as: :user
   patch '/users/:id', to: 'users#update'
-  put '/users/:id', to: 'users#update'
   delete 'users/:id', to: 'users#destroy'
 
-  root 'application#hello'
+  #Root
+  root 'posts#index'
 end
