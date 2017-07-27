@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   validates :user_id, presence: true
   validate :user_exists?
 
+  # Se um Post for associado a um User inexistente, levantará um erro
   def user_exists?
     if !User.exists?(self.user_id)
       errors.add(:user_id, " don't exists")

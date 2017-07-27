@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_user, except: :new
+  before_action :logged_user, except: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :non_logged_user, only: [:new, :create]
@@ -32,6 +32,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        log_in @user
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -95,7 +96,7 @@ class UsersController < ApplicationController
       end
     end
 
-    # Verificar se não há alguém logado
+    # Se alguém logado tentar criar um novo usuário, redirecionar
     def non_logged_user
       respond_to do |format|
         format.html { redirect_to users_url, alert: 'Não permitido!' }

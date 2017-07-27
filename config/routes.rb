@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
 
-  #Login
+  # Login
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  #Post
+  # Post
   resources :posts
 
-  #User
+  # User
   get '/users', to: 'users#index'
   post '/users', to: 'users#create'
   get '/users/new', to: 'users#new', as: :new_user
@@ -17,6 +17,6 @@ Rails.application.routes.draw do
   patch '/users/:id', to: 'users#update'
   delete 'users/:id', to: 'users#destroy'
 
-  #Root
+  # Root
   root 'sessions#new'
 end

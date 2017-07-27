@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   before_action :logged_user
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
+  before_action :correct_or_admin_user, only: :destroy
 
   # GET /posts
   # GET /posts.json
@@ -30,7 +31,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to @post, notice: 'Post criado com sucesso.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -44,7 +45,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to @post, notice: 'Post atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -58,7 +59,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to posts_url, notice: 'Post destruido com sucesso.' }
       format.json { head :no_content }
     end
   end
@@ -77,7 +78,16 @@ class PostsController < ApplicationController
     # Conferir se o usuário é o dono do Post
     def correct_user
       respond_to do |format|
-        format.html { redirect_to request.referrer, alert: 'Não permitido!' }
+        format.html { redirect_to posts_url, alert: 'Não permitido!' }
       end if current_user.id != @post.user_id
+    end
+
+    # Conferir se o usuário é administrador ou dono do post
+    def correct_or_admin_user
+      if current_user != @post.user && current_user.admin == false
+        respond_to do |format|
+          format.html { redirect_to posts_url, alert: 'Não permitido!' }
+        end
+      end
     end
 end
