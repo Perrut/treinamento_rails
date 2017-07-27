@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :non_logged_user, only: [:new, :create]
   before_action :correct_or_admin_user, only: :destroy
+  before_action :admin_user, only: :index
 
   # GET /users
   # GET /users.json
@@ -101,5 +102,14 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html { redirect_to users_url, alert: 'Não permitido!' }
       end if current_user != nil
+    end
+
+    # Verficar se o usuário logado é aministrador
+    def admin_user
+      if !current_user.admin
+        respond_to do |format|
+          format.html { redirect_to root_url, alert: 'Não permitido!' }
+        end
+      end
     end
 end

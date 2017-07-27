@@ -9,9 +9,10 @@
   </head>
 
   <body>
-    <% if logged_in? %>
-      <h2 id="notice">Você está logado! <%= current_user.name %> <%= link_to "(Log out)", logout_path, method: :delete %></h2>
-    <% end %>
-    <%= yield %>
+    <%= render "layouts/header" %>
+    <div class="text-center" id="central-div">
+      <%= yield %>
+    </div>
+    <%= render "layouts/footer" %>
   </body>
 </html>
