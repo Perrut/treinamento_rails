@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # About
+  get '/about', to: 'static_pages#about'
+
   # Login
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

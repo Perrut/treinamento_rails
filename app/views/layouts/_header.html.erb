@@ -6,7 +6,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">WebSiteName</a>
+      <%= link_to "BRÓGUI", root_url, class: "navbar-brand" %>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -34,9 +34,8 @@
           </li>
         <% else %>
           <li>
-            <%= link_to login_path do %>
-              <!-- Mudar pra outra coisa, help, contato, sei lá -->
-              Login <span class="glyphicon glyphicon-log-in"></span>
+            <%= link_to about_path do %>
+              Sobre <span class="glyphicon glyphicon-road"></span>
             <% end %>
           </li>
         <% end %>
