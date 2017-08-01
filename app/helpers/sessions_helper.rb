@@ -3,6 +3,7 @@ module SessionsHelper
   # Logar o usuário
   def log_in(user)
     session[:user_id] = user.id
+    redirect_to user
   end
 
   # Retornar o usuário que está logado

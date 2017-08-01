@@ -1,7 +1,8 @@
+# Posts Controller
 class PostsController < ApplicationController
   before_action :logged_user
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :set_post, only: %i[show edit update destroy]
+  before_action :correct_user, only: %i[edit update]
   before_action :correct_or_admin_user, only: :destroy
 
   # GET /posts
@@ -12,8 +13,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   # GET /posts/1.json
-  def show
-  end
+  def show; end
 
   # GET /posts/new
   def new
@@ -21,8 +21,7 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /posts
   # POST /posts.json
@@ -32,10 +31,8 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post criado com sucesso.' }
-        format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -45,11 +42,12 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post atualizado com sucesso.' }
-        format.json { render :show, status: :ok, location: @post }
+        format.html do
+          redirect_to @post,
+                      notice: 'Post atualizado com sucesso.'
+        end
       else
-        format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        format.html { render :edit, notice: 'Algo deu errado.' }
       end
     end
   end
@@ -59,35 +57,42 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post destruido com sucesso.' }
+      format.html do
+        redirect_to posts_url,
+                    notice: 'Post destruido com sucesso.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:content, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-    # Conferir se o usuário é o dono do Post
-    def correct_user
-      respond_to do |format|
+  # Never trust parameters from the scary internet,
+  # only allow the white list through.
+  def post_params
+    params.require(:post).permit(:content, :user_id)
+  end
+
+  # Conferir se o usuario e o dono do Post
+  def correct_user
+    respond_to do |format|
+      if current_user.id != @post.user_id
         format.html { redirect_to posts_url, alert: 'Não permitido!' }
-      end if current_user.id != @post.user_id
-    end
-
-    # Conferir se o usuário é administrador ou dono do post
-    def correct_or_admin_user
-      if current_user != @post.user && current_user.admin == false
-        respond_to do |format|
-          format.html { redirect_to posts_url, alert: 'Não permitido!' }
-        end
       end
     end
+  end
+
+  # Conferir se o usuario e administrador ou dono do post
+  def correct_or_admin_user
+    respond_to do |format|
+      if current_user != @post.user && current_user.admin == false
+        format.html { redirect_to posts_url, alert: 'Não permitido!' }
+      end
+    end
+  end
 end

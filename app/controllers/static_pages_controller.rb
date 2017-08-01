@@ -1,3 +1,4 @@
+# Static Pages
 class StaticPagesController < ApplicationController
   def about
     @posts = Post.all.count

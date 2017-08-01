@@ -8,6 +8,8 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
+# Rubocop for code inspect
+gem 'rubocop', '~> 0.49.1', require: false
 # Bcrypt for password encryptation
 gem 'bcrypt', '3.1.11'
 # Bootstrap for styling pages
